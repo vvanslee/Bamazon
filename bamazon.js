@@ -34,22 +34,28 @@ function displayProducts(err, res) {
             if (err) throw err;
             inquirer.prompt([
                 {
-                    name: welcome,
+                    name: 'welcome',
+                    type: 'text',
                     message: "Welcome to Bamazon!"
                 },
                 {
-                    name: productsList,
-                    type: ,
-                    choices: ,// display products in for loop using inquirer
-                    message: // "What would you like to purchase?"
+                    name: 'productsList',
+                    type: 'list',
+                    choices: function() {
+                        var choiceArray = [];
+                        for (var i = 0; i < results.length; i++) {
+                        choiceArray.push(results[i].item_name);
+                        }
+                        return choiceArray;
+                },
+                    message: "What would you like to purchase?"
                 },
                 {
-                    name:
-                    type: input,
-                    message: , //select quantity
+                    name: 'enterQty',
+                    type: 'input',
+                    message: "Please enter a quantity"
                 }
             ])
-
         }
     )
 }
