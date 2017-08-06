@@ -10,8 +10,40 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     console.log(err);
+    displayProducts();
     // createProduct();
 });
+
+function displayProducts(err, res) {
+    connection.query('SELECT * FROM products', function(err, res) {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                name: 'welcome',
+                type: 'text',
+                message: "Welcome to Bamazon! (press enter to shop)"
+            },
+            {
+                name: 'productsList',
+                type: 'list',
+                choices: function() {
+                    var choiceArray = [];
+                    for (var i = 0; i < results.length; i++) {
+                    choiceArray.push(results[i].product_name);
+                    }
+                    return choiceArray;
+            },
+                message: "What would you like to purchase?"
+            },
+            {
+                name: 'enterQty',
+                type: 'input',
+                message: "Please enter a quantity"
+            }
+        ]);
+    });
+}
+
 
 // function createProduct() {
 //     var query = connection.query(
@@ -27,35 +59,3 @@ connection.connect(function(err) {
 //         }
 //     )
 // }
-
-function displayProducts(err, res) {
-    var query = connection.query(
-        'SELECT * FROM products', function(err, res) {
-            if (err) throw err;
-            inquirer.prompt([
-                {
-                    name: 'welcome',
-                    type: 'text',
-                    message: "Welcome to Bamazon!"
-                },
-                {
-                    name: 'productsList',
-                    type: 'list',
-                    choices: function() {
-                        var choiceArray = [];
-                        for (var i = 0; i < results.length; i++) {
-                        choiceArray.push(results[i].item_name);
-                        }
-                        return choiceArray;
-                },
-                    message: "What would you like to purchase?"
-                },
-                {
-                    name: 'enterQty',
-                    type: 'input',
-                    message: "Please enter a quantity"
-                }
-            ])
-        }
-    )
-}
