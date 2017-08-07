@@ -1,4 +1,4 @@
 # Bamazon
 
-Inline-style: 
 ![bamazon gif](bamazon.gif "Bamazon Demo")
+![database](db.png "database screenshot")
