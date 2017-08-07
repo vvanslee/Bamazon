@@ -28,12 +28,17 @@ function displayProducts(err, res) {
                 type: 'list',
                 choices: function() {
                     var choiceArray = [];
-                    for (var i = 0; i < results.length; i++) {
-                    choiceArray.push(results[i].product_name);
+                    for (var i = 0; i < res.length; i++) {
+                    choiceArray.push("Product ID: " + res[i].item_id + " | " + res[i].product_name);
                     }
                     return choiceArray;
             },
                 message: "What would you like to purchase?"
+            },
+            {
+                name: 'enterID',
+                type: 'input',
+                message: "Please enter the ID of the product you want to purchase"
             },
             {
                 name: 'enterQty',
