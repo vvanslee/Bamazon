@@ -25,7 +25,8 @@ function displayProducts(err, res) {
             },
             {
                 name: 'productsList',
-                type: 'list',
+                type: 'rawlist',
+                pageSize: 50,
                 choices: function() {
                     var choiceArray = [];
                     for (var i = 0; i < res.length; i++) {
@@ -33,11 +34,6 @@ function displayProducts(err, res) {
                     }
                     return choiceArray;
             },
-                message: "What would you like to purchase?"
-            },
-            {
-                name: 'enterID',
-                type: 'input',
                 message: "Please enter the ID of the product you want to purchase"
             },
             {
