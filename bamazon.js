@@ -41,7 +41,41 @@ function displayProducts(err, res) {
                 type: 'input',
                 message: "Please enter a quantity"
             }
-        ]);
+        ]).then(function(answer) {
+                var chosenItem;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].product_name === answer.choice) {
+                        chosenItem = res[i];
+                    }
+                }
+
+                if (chosenItem.stock_qty - parseInt(answer.enterQty) >= 0) {
+                // bid was high enough, so update db, let the user know, and start over
+                connection.query(
+                    "UPDATE products SET ? WHERE ?",
+                    [
+                    {
+                        stock_qty: chosenItem.stock_qty - parseInt(answer.enterQty)
+                    },
+                    {
+                        item_id: chosenItem.item_id
+                    }
+                    ],
+                    function(error) {
+                    if (error) throw err;
+                    console.log("Item purchased successfully!");
+                    displayProducts();
+                    }
+                );
+                }
+                else {
+                // bid wasn't high enough, so apologize and start over
+                console.log("Not enough items in stock, please try again and select a lower quantity");
+                displayProducts();
+                }
+            }
+        
+        );
     });
 }
 
